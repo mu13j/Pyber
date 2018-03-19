@@ -47,6 +47,15 @@ del c['fare']
 e=pd.merge(d,c,on='city',how="outer")
 e=e.rename(columns={'date':'Total Number of Rides','driver_count':'Total Number of Drivers'})
 e['Average Fare']=e['Total Fare']/e['Total Number of Rides']
+colors=[]
+for i in e['type']:
+    if i=='Urban':
+        colors.append('lightcoral')
+    elif i=='Suburban':
+        colors.append('lightskyblue')
+    else:
+        colors.append('gold')
+e['color']=colors
 groups=e.groupby('type')
 ```
 
@@ -55,7 +64,7 @@ groups=e.groupby('type')
 #Bubble Chart
 labels=[]
 for name, group in groups:
-    plt.scatter(group['Total Number of Rides'],group['Average Fare'],s=5*group['Total Number of Drivers'],alpha=0.5)
+    plt.scatter(group['Total Number of Rides'],group['Average Fare'],s=5*group['Total Number of Drivers'],alpha=0.5,color=group['color'])
     labels.append(name)
 plt.xlabel('Total Rides Per City')
 plt.ylabel('Average Fare Per City ($)')
@@ -76,7 +85,7 @@ plt.show()
 plt.title("% of Total Fares By City Type")
 explode = (0, 0, 0.05)
 f=groups.sum()
-plt.pie(f['Total Fare'],labels=labels,explode=explode, autopct="%1.1f%%",shadow=True,startangle=90)
+plt.pie(f['Total Fare'],labels=labels,explode=explode, autopct="%1.1f%%",shadow=True,startangle=90, colors=['gold','lightskyblue','lightcoral'])
 plt.axis("equal")
 plt.show()
 ```
@@ -90,7 +99,7 @@ plt.show()
 #Pie Chart for Total Rides By City Types
 plt.title("% of Total Rides By City Type")
 explode = (0, 0, 0.05)
-plt.pie(f['Total Number of Rides'],labels=labels,explode=explode, autopct="%1.1f%%",shadow=True,startangle=90)
+plt.pie(f['Total Number of Rides'],labels=labels,explode=explode, autopct="%1.1f%%",shadow=True,startangle=90, colors=['gold','lightskyblue','lightcoral'])
 plt.axis("equal")
 plt.show()
 ```
@@ -104,7 +113,7 @@ plt.show()
 #Pie Chart for Total Drivers By City Types
 plt.title("% of Total Drivers By City Type")
 explode = (0, 0, 0.05)
-plt.pie(f['Total Number of Drivers'],labels=labels,explode=explode, autopct="%1.1f%%",shadow=True,startangle=90)
+plt.pie(f['Total Number of Drivers'],labels=labels,explode=explode, autopct="%1.1f%%",shadow=True,startangle=90, colors=['gold','lightskyblue','lightcoral'])
 plt.axis("equal")
 plt.show()
 ```
