@@ -11,6 +11,8 @@
 ```python
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn
+import numpy as np
 ```
 
 
@@ -63,6 +65,8 @@ groups=e.groupby('type')
 ```python
 #Bubble Chart
 labels=[]
+sns.set(color_codes=True)
+plt.grid()
 for name, group in groups:
     plt.scatter(group['Total Number of Rides'],group['Average Fare'],s=5*group['Total Number of Drivers'],alpha=0.5,color=group['color'])
     labels.append(name)
@@ -72,11 +76,18 @@ plt.title('Pyber Ride Sharing Data (2016)')
 plt.grid(axis='both')
 plt.legend(labels)
 plt.annotate('    Circle size correlates with driver count of city',xy=(36,40))
-plt.show()
+
 ```
 
 
-![png](output_7_0.png)
+
+
+    Text(36,40,'    Circle size correlates with driver count of city')
+
+
+
+
+![png](output_7_1.png)
 
 
 
@@ -121,3 +132,23 @@ plt.show()
 
 ![png](output_10_0.png)
 
+
+
+```python
+df=pd.DataFrame({'x': range(1,101), 'y': np.random.randn(100)*15+range(1,101), 'z': (np.random.randn(100)*15+range(1,101))*2 })
+ 
+
+import seaborn as sns
+plt.plot( 'x', 'y', data=df, marker='o', color='mediumvioletred')
+plt.rcParams.update(plt.rcParamsDefault)
+
+%matplotlib inline
+
+plt.style.use('seaborn-paper')
+plt.show()
+```
+
+    C:\Users\J\Anaconda3\lib\site-packages\matplotlib\pyplot.py:3240: RuntimeWarning: Second argument 'y' is ambiguous: could be a color spec but is in data. Using as data.
+    Either rename the entry in data or use three arguments to plot.
+      ret = ax.plot(*args, **kwargs)
+    

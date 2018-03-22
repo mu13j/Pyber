@@ -14,6 +14,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import statistics as stat
+import seaborn as sns
 ```
 
 
@@ -38,6 +39,7 @@ times=g.count().index
 
 
 ```python
+#Finds the necessary data
 c=pd.merge(a,b,on='Mouse ID')
 d=c.groupby('Drug')
 tumorpoints=[]
@@ -84,10 +86,10 @@ for i in range(len(tumorpoints)):
 
 ```python
 #Tumor Response Graph
-
+sns.set(color_codes=True)
 for i in range(len(tumorpoints)):
     plt.scatter(times, tumorpoints[i])
-    plt.plot(times,tumorpoints[i],linestyle='dotted')
+    plt.plot(times,tumorpoints[i],linestyle='dotted',alpha=.5)
 plt.legend(drugs,bbox_to_anchor=(1.1, 1.05))
 plt.xlabel('Time (days)')
 plt.ylabel('Tumor Size (mm3)')
@@ -327,7 +329,7 @@ for i in range(len(change)):
     if change[i]>0:
         plt.text(x=x_axis[i]+.2,y=change[i]-6,s=strings[i])
     else:
-        plt.text(x=x_axis[i]+.2,y=change[i]+1,s=strings[i])
+        plt.text(x=x_axis[i]+.15,y=change[i]+1,s=strings[i])
 plt.show()
 
 ```
