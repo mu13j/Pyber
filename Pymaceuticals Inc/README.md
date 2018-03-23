@@ -2,9 +2,8 @@
 # Analysis
 
 * Capomulin and Ramicane were the only drugs that decreased the tumor size over the treatment. The other drugs treatments all showed a fairly consistent increase in tumor size.
-* Capomulin and Ramicane were also the two most useful drugs in reducing metastatic spread, though Stelaysn also showed some promise.
-* The error bars present in both the tumor size and metastatic spread studies of Capomulin and Ramicane suggest that further studies are needed as currently there is too much standard deviation to say if either of the previous two observations are actually true.
-* Capomulin and Ramicane were also the best at keeping mice alive to the end of the treatment so it does seem likely there is a statistically significant effect. Further statistical analysis is needed because of the small sample size though.
+* Capomulin and Ramicane were also the two most useful drugs in reducing metastatic spread and keeping the mice alive, though Stelaysn also showed some promise in stopping metastatic spread.
+* The other drugs were generally indistinguishable from the placebo in both tumor reduction and survival rate, with Ketapril actually performing worse in each of the metrics.
 
 
 
@@ -58,14 +57,14 @@ for i in drugs:
     g=e.groupby('Timepoint')   
     for j in times:
         tumorvolumes.append(g.get_group(j)['Tumor Volume (mm3)'].mean())
-        volstd.append(stat.stdev(g.get_group(j)['Tumor Volume (mm3)']))
+        volstd.append(stat.stdev(g.get_group(j)['Tumor Volume (mm3)'])/(g.get_group(j)['Metastatic Sites'].count())**.5)
         metasites.append(g.get_group(j)['Metastatic Sites'].mean())
         #Must be done because stdev of integers doesn't work for some reason
         new=[]
         for k in g.get_group(j)['Metastatic Sites']:
             new.append(float(k))
         #------------------------------------------------------------------------#
-        sitestd.append(stat.stdev(new))
+        sitestd.append(stat.stdev(new)/(g.get_group(j)['Metastatic Sites'].count())**.5)
         miceali.append(g.get_group(j)['Metastatic Sites'].count())
     tumorpoints.append(tumorvolumes)
     tumorstd.append(volstd)
